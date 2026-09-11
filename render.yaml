@@ -1,0 +1,37 @@
+# Render Blueprint for "Khushi's Fairy Land" (Next.js 16 + PostgreSQL via Drizzle).
+#
+# One-click deploy:
+#   Render Dashboard → "New +" → "Blueprint" → select this repo → "Apply".
+# Render creates the Postgres database AND the web service, wires DATABASE_URL
+# automatically, creates the tables (drizzle-kit push) and builds the site.
+#
+# Both resources must live in the same region so the internal database URL works.
+# Pick the region closest to you: oregon | ohio | virginia | frankfurt | singapore
+
+services:
+  - type: web
+    name: khushi-fairy-land
+    runtime: node
+    plan: free
+    region: singapore
+    # --include=dev is required: TypeScript, Tailwind and drizzle-kit are devDependencies
+    buildCommand: npm ci --include=dev && npx drizzle-kit push && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.1
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: khushi-fairy-land-db
+          property: connectionString
+
+databases:
+  - name: khushi-fairy-land-db
+    plan: free # ⚠ free databases expire after 30 days — upgrade to "basic-256mb" to keep it forever
+    region: singapore
+    databaseName: khushi_fairyland
+    user: khushi

@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# next.js build output
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# environment files (never commit secrets — Render injects DATABASE_URL itself)
+.env
+.env.*
+!.env.example
+
+# logs & misc
+npm-debug.log*
+*.log
+.DS_Store
+.vercel
