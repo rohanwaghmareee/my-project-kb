@@ -1,20 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
+import { Great_Vibes, Quicksand } from "next/font/google";
 import type { ReactNode } from "react";
 import "./globals.css";
 
-const script = localFont({
-  src: "./fonts/GreatVibes-latin.woff2",
+const script = Great_Vibes({
   variable: "--font-script",
   display: "swap",
   weight: "400",
 });
 
-const body = localFont({
-  src: "./fonts/Quicksand-latin.woff2",
+const body = Quicksand({
   variable: "--font-body",
   display: "swap",
-  weight: "300 700",
+  weight: ["300", "700"],
 });
 
 export const metadata: Metadata = {
